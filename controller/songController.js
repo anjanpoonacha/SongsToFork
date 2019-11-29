@@ -2,9 +2,8 @@ const Song = require('./../model/song');
 const catchAsync = require('./../utils/catchAsync');
 
 exports.getAllSongs = catchAsync(async (req, res, next) => {
-  const songs = await Song.find()
-    .populate('artist')
-    .populate('comment');
+  const songs = await Song.find();
+
   res.status(200).json({
     status: 'SUCCESS',
     numSongs: songs.length,
@@ -28,29 +27,6 @@ exports.getSong = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getFamous = catchAsync(async (req, res, next) => {
-  const songs = await Song.aggregate([
-    {
-      $lookup: {
-        from: 'Artist',
-        localField: '_id',
-        foreignField: '_id',
-        as: 'is_famous'
-      }
-    }
-  ]);
-  // const songs = await Song.find()
-  //   .populate('artist')
-  //   .populate('comments');
-  console.log(songs);
-  res.status(200).json({
-    status: 'SUCCESS',
-    data: {
-      songs
-    }
-  });
-});
-
 exports.createSong = catchAsync(async (req, res, next) => {
   const newSong = await Song.create(req.body);
 
@@ -58,6 +34,19 @@ exports.createSong = catchAsync(async (req, res, next) => {
     status: 'SUCCESS',
     data: {
       newSong
+    }
+  });
+});
+
+exports.getFamous = catchAsync(async (req, res, next) => {
+  const songs = await Song.find();
+
+  const famousSongs = songs.filter(el => el.artist.is_famous === true);
+  console.log(famousSongs);
+  res.status(200).json({
+    status: 'SUCCESS',
+    data: {
+      famousSongs
     }
   });
 });

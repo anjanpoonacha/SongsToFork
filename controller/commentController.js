@@ -3,19 +3,12 @@ const Song = require('./../model/song');
 const catchAsync = require('./../utils/catchAsync');
 
 exports.checkDuplicate = catchAsync(async (req, res, next) => {
-  const query = await Song.find()
-    .populate('artist')
-    .populate('comment');
-  console.log(query[0].comments);
+  // const query = await Song.find();
+  // console.log(query[3].comments);
+  const query = await Song.aggregate([{ $unwind: '$comments' }]);
+  console.log(query);
+
   next();
-  // if (
-  //   query.model._id === req.params.id &&
-  //   query.model.comments.join(',').includes(req.body.user)
-  // ) {
-  //   next();
-  // } else {
-  //   next();
-  // }
 });
 
 exports.createComment = catchAsync(async (req, res, next) => {
@@ -35,9 +28,7 @@ exports.createComment = catchAsync(async (req, res, next) => {
   });
 });
 exports.getComments = catchAsync(async (req, res, next) => {
-  const comments = await Comment.find()
-    .populate({ path: 'song', select: 'title' })
-    .populate({ path: 'user', select: 'firstName lastName' });
+  const comments = await Comment.find();
 
   res.status(200).json({
     status: 'SUCCESS',

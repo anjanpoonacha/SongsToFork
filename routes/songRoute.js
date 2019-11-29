@@ -13,8 +13,6 @@ router
 router
   .route('/:id')
   .get(songController.getSong)
-  .post(
-    /* commentController.checkDuplicate,  */ commentController.createComment
-  );
+  .post(commentController.checkDuplicate, commentController.createComment);
 
 module.exports = router;

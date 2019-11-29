@@ -30,6 +30,11 @@ const songSchema = new mongoose.Schema({
   }
 });
 
+songSchema.pre(/^find/, function(next) {
+  this.populate('comments');
+  next();
+});
+
 // eslint-disable-next-line new-cap
 const Song = mongoose.model('Song', songSchema);
 
