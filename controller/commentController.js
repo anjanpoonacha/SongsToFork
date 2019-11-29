@@ -3,11 +3,12 @@ const Song = require('./../model/song');
 const catchAsync = require('./../utils/catchAsync');
 
 exports.checkDuplicate = catchAsync(async (req, res, next) => {
-  // const query = await Song.find();
-  // console.log(query[3].comments);
-  const query = await Song.aggregate([{ $unwind: '$comments' }]);
-  console.log(query);
-
+  const query = await Comment.find();
+  const songId = req.params.id;
+  const userId = req.body.user;
+  // eslint-disable-next-line eqeqeq
+  const dup = query.find(el => el.user._id == userId && el.song == songId);
+  if (dup) throw new Error('A user can comment only once');
   next();
 });
 
