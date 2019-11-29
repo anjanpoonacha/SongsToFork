@@ -39,12 +39,13 @@ exports.createSong = catchAsync(async (req, res, next) => {
 });
 
 exports.getFamous = catchAsync(async (req, res, next) => {
-  const songs = await Song.find();
+  const songs = await Song.find().populate('artist');
 
   const famousSongs = songs.filter(el => el.artist.is_famous === true);
   console.log(famousSongs);
   res.status(200).json({
     status: 'SUCCESS',
+    numResult: famousSongs.length,
     data: {
       famousSongs
     }

@@ -9,21 +9,20 @@ exports.checkDuplicate = catchAsync(async (req, res, next) => {
 
   // eslint-disable-next-line eqeqeq
   const dup = query.find(el => el.user._id == userId && el.song == songId);
-  if (dup) throw new Error('A user can comment only once');
+  if (dup) next(new Error('A user can comment only once'));
   next();
 });
 
 exports.createComment = catchAsync(async (req, res, next) => {
   req.body.song = req.params.songId;
   const newComment = await Comment.create(req.body);
-  // console.log(await Song.find());
 
   const query = await Song.findOneAndUpdate(
     { _id: req.params.songId },
     { $push: { comments: newComment } },
     { runValidators: true, new: true }
   );
-  console.log(query);
+
   if (query) {
     res.status(200).json({
       status: 'SUCCESS',
@@ -32,8 +31,8 @@ exports.createComment = catchAsync(async (req, res, next) => {
       }
     });
   }
-  next();
 });
+
 exports.getComments = catchAsync(async (req, res, next) => {
   const comments = await Comment.find();
 

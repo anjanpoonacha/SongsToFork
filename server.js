@@ -23,8 +23,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  .then(con => console.log(`Connection is established`));
-// .catch(err => console.log('ERROR'));
+  .then(() => console.log(`Connection is established`));
 
 const app = require('./app');
 
