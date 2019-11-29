@@ -29,19 +29,19 @@ exports.getSong = catchAsync(async (req, res, next) => {
 });
 
 exports.getFamous = catchAsync(async (req, res, next) => {
-  const songs = await Song.aggregate([
-    {
-      $lookup: {
-        from: 'Artist',
-        localField: '_id',
-        foreignField: '_id',
-        as: 'is_famous'
-      }
-    }
-  ]);
-  // const songs = await Song.find()
-  //   .populate('artist')
-  //   .populate('comments');
+//   const songs = await Song.aggregate([
+//     {
+//       $lookup: {
+//         from: 'Artist',
+//         localField: '_id',
+//         foreignField: '_id',
+//         as: 'is_famous'
+//       }
+//     }
+//   ]);
+  const songs = await Song.find()
+    .populate('artist')
+    .populate('comments');
   console.log(songs);
   res.status(200).json({
     status: 'SUCCESS',
