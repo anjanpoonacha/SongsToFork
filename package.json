@@ -1,5 +1,5 @@
 {
-  "name": "zypher",
+  "name": "songs_to_fork",
   "version": "1.0.0",
   "description": "Building an API with mongoDB and node",
   "main": "app.js",
