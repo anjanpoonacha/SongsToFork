@@ -13,7 +13,8 @@ const commentSchema = new mongoose.Schema({
   },
   detail: {
     type: String,
-    required: [true, 'Comment cannot be null']
+    required: [true, 'Comment should have atleast 10 characters'],
+    minlength: 10
   }
 });
 

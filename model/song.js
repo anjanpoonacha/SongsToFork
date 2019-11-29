@@ -9,16 +9,10 @@ const songSchema = new mongoose.Schema({
     type: Date,
     default: new Date().toUTCString()
   },
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comment'
-    }
-  ],
   artist: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Artist',
-    required: [true, 'A song must have a title']
+    required: [true, 'A song must have an artist']
   },
   album_name: {
     type: String,
@@ -27,11 +21,17 @@ const songSchema = new mongoose.Schema({
   genre: {
     type: String,
     default: 'Classical'
-  }
+  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ]
 });
 
 songSchema.pre(/^find/, function(next) {
-  this.populate('comments');
+  this.populate('comments').populate('user');
   next();
 });
 

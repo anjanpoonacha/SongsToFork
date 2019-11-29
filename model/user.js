@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: [true, 'A song must have a title']
+    required: [true, 'firstName is mandatory']
   },
   lastName: {
     type: String,
-    required: [true, 'A song must have a title']
+    required: [true, 'lastname is mandatory']
   }
 });
 

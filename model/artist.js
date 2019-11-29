@@ -6,7 +6,8 @@ const artistSchema = new mongoose.Schema({
     required: [true, 'An artist must have a first name']
   },
   lastName: {
-    type: String
+    type: String,
+    required: [true, 'An artist must have a last name']
   },
   is_famous: {
     type: Boolean,

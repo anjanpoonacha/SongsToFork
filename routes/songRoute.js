@@ -11,7 +11,7 @@ router
   .post(songController.createSong);
 
 router
-  .route('/:id')
+  .route('/:songId')
   .get(songController.getSong)
   .post(commentController.checkDuplicate, commentController.createComment);
 

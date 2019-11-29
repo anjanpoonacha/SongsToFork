@@ -14,7 +14,7 @@ exports.getAllSongs = catchAsync(async (req, res, next) => {
 });
 
 exports.getSong = catchAsync(async (req, res, next) => {
-  const song = await Song.findById(req.params.id)
+  const song = await Song.findById(req.params.songId)
     .sort('createdAt')
     .populate('artist')
     .populate('comment');
